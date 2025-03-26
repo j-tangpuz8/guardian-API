@@ -1,0 +1,24 @@
+const express = require("express");
+const bodyParser = require("body-parser");
+const connectDB = require("./config/db");
+const incidentsRoutes = require("./routes/incidentsRoutes");
+const usersRoutes = require("./routes/usersRoutes");
+
+require("dotenv").config();
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// middleware
+app.use(bodyParser.json());
+
+// db connection
+connectDB();
+
+// routes
+app.use("/incidents", incidentsRoutes);
+app.use("/users", usersRoutes);
+
+app.listen(PORT, () => {
+  console.log(`server is running on port ${PORT}`);
+});
