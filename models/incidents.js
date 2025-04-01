@@ -16,6 +16,11 @@ const incidentsSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+    isAccepted: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",

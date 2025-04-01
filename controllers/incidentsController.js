@@ -29,7 +29,7 @@ const getIncidentById = async (req, res) => {
 // CREATE INCIDENT
 const createIncident = async (req, res) => {
   try {
-    const {incidentType, isVerified, isResolved, userId} = req.body;
+    const {incidentType, isVerified, isResolved, isAccepted, userId} = req.body;
 
     if (!userId) {
       return res.status(400).json({message: "User ID is required"});
@@ -39,6 +39,7 @@ const createIncident = async (req, res) => {
       incidentType,
       isVerified,
       isResolved,
+      isAccepted,
       user: userId,
     });
 

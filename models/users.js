@@ -29,7 +29,7 @@ const usersSchema = new mongoose.Schema({
   },
   address: {
     type: String,
-    required: true,
+    required: false,
   },
   barangay: {
     type: String,
@@ -37,7 +37,7 @@ const usersSchema = new mongoose.Schema({
   },
   city: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
