@@ -21,6 +21,14 @@ const incidentsSchema = new mongoose.Schema(
       required: true,
       default: false,
     },
+    acceptedAt: {
+      type: Date,
+      default: null,
+    },
+    resolvedAt: {
+      type: Date,
+      default: null,
+    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
@@ -31,6 +39,17 @@ const incidentsSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+incidentsSchema.pre("save", function (next) {
+  if (this.isAccepted && !this.acceptedAt) {
+    this.acceptedAt = new Date();
+  }
+
+  if (this.isResolved && !this.resolvedAt) {
+    this.resolvedAt = new Date();
+  }
+  next();
+});
 
 const Incidents = mongoose.model("Incidents", incidentsSchema);
 module.exports = Incidents;
