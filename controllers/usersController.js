@@ -1,5 +1,4 @@
 const Users = require("../models/users");
-const bcrypt = require("bcrypt");
 const {StreamChat} = require("stream-chat");
 require("dotenv").config();
 
@@ -87,14 +86,12 @@ const createUser = async (req, res) => {
         .json({message: "User already exists. Email has been registered"});
     }
 
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     const newUser = new Users({
       firstName,
       lastName,
       email,
       phone,
-      password: hashedPassword,
+      password,
       address,
       barangay,
       city,
