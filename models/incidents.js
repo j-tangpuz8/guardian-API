@@ -34,6 +34,30 @@ const incidentsSchema = new mongoose.Schema(
       ref: "Users",
       required: true,
     },
+    dispatcher: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users",
+      required: false,
+      default: null,
+    },
+    rating: {
+      type: Number,
+      enum: [1, 2, 3, 4, 5], 
+      required: false,
+      default: null,
+    },
+    incidentDetails: {
+      incident: {
+        type: String,
+        required: false,
+        default: null,
+      },
+      incidentDescription: {
+        type: String,
+        required: false,
+        default: null,
+      },
+    },
   },
   {
     timestamps: true,
