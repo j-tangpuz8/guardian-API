@@ -60,14 +60,23 @@ const updateIncident = async (req, res) => {
       return res.status(404).json({message: "Incident not found"});
     }
 
+    // Explicitly update fields
+    if (req.body.isAccepted !== undefined) {
+      incident.isAccepted = req.body.isAccepted;
+    }
+    if (req.body.dispatcher !== undefined) {
+      incident.dispatcher = req.body.dispatcher;
+    }
+    // Update any other fields that might be present
     Object.keys(req.body).forEach((key) => {
-      if (key !== "user") {
+      if (key !== "user" && key !== "isAccepted" && key !== "dispatcher") {
         incident[key] = req.body[key];
       }
     });
+
     const updatedIncident = await incident.save();
     const populatedIncident = await updatedIncident.populate(
-      "user",
+      "user dispatcher",
       "-password"
     );
     res.status(200).json(populatedIncident);
