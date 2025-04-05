@@ -29,10 +29,17 @@ const getIncidentById = async (req, res) => {
 // CREATE INCIDENT
 const createIncident = async (req, res) => {
   try {
-    const {incidentType, isVerified, isResolved, isAccepted, userId} = req.body;
+    const {
+      incidentType,
+      isVerified,
+      isResolved,
+      isAccepted,
+      userId,
+      incidentDetails,
+    } = req.body;
 
     if (!userId) {
-      return res.status(400).json({message: "User ID is required"});
+      return res.status(400).json({message: "Volunteer User ID is required"});
     }
 
     const newIncident = new Incidents({
@@ -41,6 +48,14 @@ const createIncident = async (req, res) => {
       isResolved,
       isAccepted,
       user: userId,
+      incidentDetails: incidentDetails || {
+        incident: null,
+        incidentDescription: null,
+        coordinates: {
+          lat: null,
+          lon: null,
+        },
+      },
     });
 
     const savedIncident = await newIncident.save();
