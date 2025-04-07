@@ -46,6 +46,18 @@ const incidentsSchema = new mongoose.Schema(
       required: false,
       default: null,
     },
+    responder: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users",
+      required: false,
+      default: null,
+    },
+    responderStatus: {
+      type: Number,
+      enum: [1, 2, 3, 4],
+      required: false,
+      default: null,
+    },
     rating: {
       type: Number,
       enum: [1, 2, 3, 4, 5],
