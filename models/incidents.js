@@ -42,7 +42,7 @@ const incidentsSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
-      enum: [1, 2, 3, 4, 5], 
+      enum: [1, 2, 3, 4, 5],
       required: false,
       default: null,
     },
@@ -56,6 +56,18 @@ const incidentsSchema = new mongoose.Schema(
         type: String,
         required: false,
         default: null,
+      },
+      coordinates: {
+        lat: {
+          type: Number,
+          required: false,
+          default: null,
+        },
+        lon: {
+          type: Number,
+          required: false,
+          default: null,
+        },
       },
     },
   },
