@@ -116,8 +116,51 @@ const createUser = async (req, res) => {
   }
 };
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await Users.find().select('-password');
+    res.status(200).json(users);
+  } catch (error) {
+    console.error('Error fetching users:', error.message);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+};
+
+const getUsersByRole = async (req, res) => {
+  try {
+    const { role } = req.params;
+    
+    if (!role) {
+      return res.status(400).json({ message: "Role parameter is required" });
+    }
+
+    const users = await Users.find({ role: role }).select('-password');
+    
+    if (users.length === 0) {
+      return res.status(200).json({ 
+        message: `No users found with role: ${role}`,
+        users: [] 
+      });
+    }
+
+    res.status(200).json({
+      message: `Successfully fetched users with role: ${role}`,
+      count: users.length,
+      users
+    });
+  } catch (error) {
+    console.error(`Error fetching users by role: ${error.message}`);
+    res.status(500).json({ 
+      message: 'Error fetching users by role', 
+      error: error.message 
+    });
+  }
+};
+
 module.exports = {
   getUserById,
   loginUser,
   createUser,
+  getAllUsers,
+  getUsersByRole
 };
