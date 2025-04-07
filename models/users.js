@@ -43,7 +43,7 @@ const usersSchema = new mongoose.Schema({
     type: String,
     // enum: ['volunteer', 'Dispatcher', 'LGU', 'Responder'],
     required: false,
-    default: LGU
+    default: "LGU"
 }
 });
 
