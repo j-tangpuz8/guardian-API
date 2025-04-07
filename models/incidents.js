@@ -40,6 +40,12 @@ const incidentsSchema = new mongoose.Schema(
       required: false,
       default: null,
     },
+    lgu: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Users",
+      required: false,
+      default: null,
+    },
     rating: {
       type: Number,
       enum: [1, 2, 3, 4, 5],
