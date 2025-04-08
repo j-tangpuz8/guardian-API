@@ -51,19 +51,16 @@ const incidentsSchema = new mongoose.Schema(
       enum: ["idle", "connecting", "connected"],
       default: "idle",
     },
-    lguConnectingAt: {
-      type: Date,
-      default: null,
-    },
-    lguConnectedAt: {
-      type: Date,
-      default: null,
-    },
     responder: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
       required: false,
       default: null,
+    },
+    isAcceptedResponder: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
     responderStatus: {
       type: Number,
