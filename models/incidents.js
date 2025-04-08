@@ -46,6 +46,11 @@ const incidentsSchema = new mongoose.Schema(
       required: false,
       default: null,
     },
+    lguAccepted: {
+      type: Boolean,
+      required: false,
+      default: null,
+    },
     responder: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Users",
