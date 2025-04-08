@@ -26,6 +26,27 @@ const getIncidentById = async (req, res) => {
   }
 };
 
+const getRecentIncidentforResponder = async (req, res) => {
+  try {
+    const recentIncident = await Incidents.findOne({
+      isVerified: true,
+      isAccepted: true,
+      isResolved: false,
+    })
+      .sort({createdAt: -1})
+      .populate("user", "-password")
+      .populate("dispatcher", "-password");
+
+    if (!recentIncident) {
+      return res.status(404).json({message: "No recent incidents found"});
+    }
+
+    res.status(200).json(recentIncident);
+  } catch (error) {
+    res.status(500).json({message: "Error fetching recent incident", error});
+  }
+};
+
 // CREATE INCIDENT
 const createIncident = async (req, res) => {
   try {
@@ -105,6 +126,7 @@ const updateIncident = async (req, res) => {
 module.exports = {
   getAllIncidents,
   getIncidentById,
+  getRecentIncidentforResponder,
   createIncident,
   updateIncident,
 };
