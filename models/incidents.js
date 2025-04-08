@@ -46,9 +46,17 @@ const incidentsSchema = new mongoose.Schema(
       required: false,
       default: null,
     },
-    lguAccepted: {
-      type: Boolean,
-      required: false,
+    lguStatus: {
+      type: String,
+      enum: ["idle", "connecting", "connected"],
+      default: "idle",
+    },
+    lguConnectingAt: {
+      type: Date,
+      default: null,
+    },
+    lguConnectedAt: {
+      type: Date,
       default: null,
     },
     responder: {
@@ -107,6 +115,16 @@ incidentsSchema.pre("save", function (next) {
   if (this.isResolved && !this.resolvedAt) {
     this.resolvedAt = new Date();
   }
+
+  if (this.isModified('lguStatus')) {
+    if (this.lguStatus === "connecting" && !this.lguConnectingAt) {
+      this.lguConnectingAt = new Date();
+    }
+    if (this.lguStatus === "connected" && !this.lguConnectedAt) {
+      this.lguConnectedAt = new Date();
+    }
+  }
+  
   next();
 });
 
