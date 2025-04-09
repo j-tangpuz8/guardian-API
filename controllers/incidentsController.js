@@ -26,6 +26,7 @@ const getIncidentById = async (req, res) => {
   }
 };
 
+// fetch recent incident for ersponder app
 const getRecentIncidentforResponder = async (req, res) => {
   try {
     const recentIncident = await Incidents.findOne({
@@ -35,7 +36,8 @@ const getRecentIncidentforResponder = async (req, res) => {
     })
       .sort({createdAt: -1})
       .populate("user", "-password")
-      .populate("dispatcher", "-password");
+      .populate("dispatcher", "-password")
+      .populate("lgu", "-password");
 
     if (!recentIncident) {
       return res.status(404).json({message: "No recent incidents found"});
