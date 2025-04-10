@@ -39,11 +39,6 @@ const loginUser = async (req, res) => {
       return res.status(404).json({message: "User not found"});
     }
 
-    const isPasswordValid = await user.comparePassword(password);
-    if (!isPasswordValid) {
-      return res.status(401).json({message: "Invalid password"});
-    }
-
     const streamUserId = user._id.toString();
     const token = client.createToken(streamUserId);
 
