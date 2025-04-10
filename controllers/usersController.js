@@ -47,10 +47,13 @@ const loginUser = async (req, res) => {
     const streamUserId = user._id.toString();
     const token = client.createToken(streamUserId);
 
+    const userObject = user.toObject();
+    delete userObject.password;
+
     res.status(200).json({
       ...user.toObject(),
       token,
-      user: {id: streamUserId, email},
+      user: userObject,
       message: "User logged in successfully",
     });
   } catch (error) {
